@@ -1,6 +1,8 @@
 # VSS - Vector Space Search 
 
-A simple vector space search engine with **tf*idf** ranking.
+A simple vector space search engine with **tf*idf** ranking. 
+
+[More info, and details of how it works.](http://madeofcode.com/posts/69-vss-a-vector-space-search-engine-in-ruby)
 
 ## Install
 
