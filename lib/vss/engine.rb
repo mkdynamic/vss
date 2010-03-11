@@ -24,20 +24,20 @@ module VSS
         record.instance_eval %{def rank; #{ranks[i]}; end}
       end
     
-      # sort by rank and return
-      @records.sort { |a,b| b.rank <=> a.rank } # highest to lowest
+      # exclude 0 rank (no match) and sort by rank
+      @records.reject { |r| r.rank == 0 }.sort { |a,b| b.rank <=> a.rank }
     end
   
     private
   
     # ranks from 0 to 100
     def cosine_rank(vector1, vector2)
-      (cosine(vector1, vector2) + 1) / 2 * 100
+      cosine(vector1, vector2) / 1 * 100
     end
   
     # see http://www.ltcconline.net/greenl/courses/107/vectors/DOTCROS.HTM
     # and http://ruby-doc.org/stdlib/libdoc/matrix/rdoc/index.html
-    # will be in range -1 to 1
+    # will be in range 0 to 1, as vectors always positive
     def cosine(vector1, vector2)
       dot_product = vector1.inner_product(vector2)
       dot_product / (vector1.r * vector2.r) # Vector#r is same as ||v||
@@ -47,35 +47,45 @@ module VSS
       make_vector(query, true)
     end
   
-    # NOTE: will choke if string contains words not in vocab
+    # NOTE: will choke if string contains tokens not in vocab
     #       this is why, when we make the query vector, we do an
     #       intersection of tokens with the vocab
-    def make_vector(string, ensure_words_in_vocab = false)
+    def make_vector(string, ensure_tokens_in_vocab = false)
       @vector_cache = {}
       @vector_cache[string] ||= begin
-        arr = Array.new(vector_keyword_index.size, 0)
-
-        # uses tf*idf (http://en.wikipedia.org/wiki/Tf-idf)
-        words = tokenize(string)
-        words &= @vocab if ensure_words_in_vocab
-        words.uniq.each do |word| 
-          tf = count_in_array(words, word)
-          idf = @documents.size / count_in_array(@documents, proc { |doc| tokenize(doc).include?(word) })
-
-          index = vector_keyword_index[word]
-          arr[index] = tf * idf
+        arr = Array.new(vector_token_index.size, 0)
+        
+        tokens = tokenize(string)
+        tokens &= @vocab if ensure_tokens_in_vocab
+        tokens.uniq.each do |token| 
+          index = vector_token_index[token]
+          arr[index] = tf_idf(token, tokens, @documents)
         end
       
         Vector.elements(arr, false)
       end
     end
+    
+    def tf(token, tokens)
+      count_in_array(tokens, token)
+    end
+    
+    def idf(token, docs)
+      docs_with_token_count = count_in_array(docs, proc { |doc| tokenize(doc).include?(token) })
+      docs.size / docs_with_token_count     
+    end
+    
+    # http://en.wikipedia.org/wiki/Tf-idf
+    def tf_idf(token, tokens, docs)
+      tf(token, tokens) * idf(token, @documents)
+    end
   
-    def vector_keyword_index
-      @vector_keyword_index ||= begin
+    def vector_token_index
+      @vector_token_index ||= begin
         index, offset = {}, 0      
       
-        @vocab.each do |keyword|
-          index[keyword] = offset
+        @vocab.each do |token|
+          index[token] = offset
           offset += 1
         end
       
@@ -88,7 +98,7 @@ module VSS
       @tokenize_cache[string] ||= Tokenizer.tokenize(string)
     end
   
-    # could use Array#count, but 1.8.6 on Heroku don't have it only 1.8.7 >
+    # could use Array#count, but only for Ruby 1.8.7 >=
     def count_in_array(array, item)
       count = 0
       if item.is_a? Proc

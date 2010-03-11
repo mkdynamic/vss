@@ -1,6 +1,6 @@
 require "echoe"  
   
-Echoe.new("vss", "0.1.1") do |p|  
+Echoe.new("vss", "0.1.2") do |p|  
   p.description = "Simple vector space search engine"    
   p.url = "http://github.com/mkdynamic/vss"   
   p.author = "Mark Dodwell"      
