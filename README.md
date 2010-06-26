@@ -37,7 +37,7 @@ This isn't designed to be used on huge collections of records. The original use 
 
 ## Credits
 
-Heavily inspired by [Joesph Wilk's article on building a vector space search engine in Perl](http://blog.josephwilk.net/projects/building-a-vector-space-search-engine-in-python.html).
+Heavily inspired by [Joesph Wilk's article on building a vector space search engine in Python](http://blog.josephwilk.net/projects/building-a-vector-space-search-engine-in-python.html).
 
 Written by Mark Dodwell
 ([Design & Code](http://madeofcode.com))
