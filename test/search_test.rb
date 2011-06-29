@@ -27,9 +27,9 @@ class SearchTest < Test::Unit::TestCase
   
   def test_ranking
     results = @engine.search("How can you compare The Wire with Lost?")
-    assert_equal 82.1781403613318, results[0].rank
-    assert_equal 3.08166775680683, results[1].rank
-    assert_equal 1.3798683116522, results[2].rank
-    assert_equal 0.875309148136544, results[3].rank
+    assert_equal 82.17814036133181, results[0].rank
+    assert_equal 3.0816677568068283, results[1].rank
+    assert_equal 1.3798683116522041, results[2].rank
+    assert_equal 0.8753091481365445, results[3].rank
   end
 end

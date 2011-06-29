@@ -1,5 +1,5 @@
 require "stemmer"
-require "active_support"
+require "active_support/core_ext"
 
 module VSS
   class Tokenizer

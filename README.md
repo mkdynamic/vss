@@ -4,6 +4,8 @@ A simple vector space search engine with **tf*idf** ranking.
 
 [More info, and details of how it works.](http://madeofcode.com/posts/69-vss-a-vector-space-search-engine-in-ruby)
 
+NB. Version 0.1.4 and up requires Ruby 1.9.2.
+
 ## Install
 
 Just install the gem:
