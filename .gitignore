@@ -1,4 +1,4 @@
-.DS_Store
-Manifest
-pkg
-*.gemspec
+*.gem
+.bundle
+Gemfile.lock
+pkg/*

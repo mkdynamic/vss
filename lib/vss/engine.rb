@@ -1,5 +1,5 @@
-require "matrix"
-require "vss/tokenizer"
+require 'matrix'
+require 'vss/tokenizer'
 
 module VSS
   class Engine    
@@ -32,7 +32,13 @@ module VSS
   
     # ranks from 0 to 100
     def cosine_rank(vector1, vector2)
-      cosine(vector1, vector2) / 1 * 100
+      cos = cosine(vector1, vector2)
+      
+      if cos > 0
+        cos / 1 * 100
+      else
+        0
+      end
     end
   
     # see http://www.ltcconline.net/greenl/courses/107/vectors/DOTCROS.HTM
@@ -67,12 +73,11 @@ module VSS
     end
     
     def tf(token, tokens)
-      count_in_array(tokens, token)
+      tokens.count { |t| t == token }
     end
     
     def idf(token, docs)
-      docs_with_token_count = count_in_array(docs, proc { |doc| tokenize(doc).include?(token) })
-      docs.size / docs_with_token_count     
+      docs.size / docs.count { |d| tokenize(d).include?(token) }     
     end
     
     # http://en.wikipedia.org/wiki/Tf-idf
@@ -96,17 +101,6 @@ module VSS
     def tokenize(string)
       @tokenize_cache ||= {}
       @tokenize_cache[string] ||= Tokenizer.tokenize(string)
-    end
-  
-    # could use Array#count, but only for Ruby 1.8.7 >=
-    def count_in_array(array, item)
-      count = 0
-      if item.is_a? Proc
-        array.each { |i| count += 1 if item.call(i) }
-      else
-        array.each { |i| count += 1 if i == item }
-      end    
-      count
     end
   end
 end

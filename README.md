@@ -4,7 +4,9 @@ A simple vector space search engine with **tf*idf** ranking.
 
 [More info, and details of how it works.](http://madeofcode.com/posts/69-vss-a-vector-space-search-engine-in-ruby)
 
-NB. Version 0.1.4 and up requires Ruby 1.9.2.
+## Requirements
+
+Ruby >= 1.8.7. Tested in (MRI 1.8.7 + 1.9.2).
 
 ## Install
 
@@ -23,7 +25,7 @@ To perform a search on a collection of documents:
     
 ## Rails/ActiveRecord
 
-If you want to search a collection of `ActiveRecord` objects, you need to pass a **documentizer** `proc` when initializing `VSS::Engine` which will convert the objects into documents (which are simply strings). For example:
+If you want to search a collection of `ActiveRecord` objects, you need to pass a **documentizer** `Proc` when initializing `VSS::Engine` which will convert the objects into documents (which are simply strings). For example:
 
     class Page < ActiveRecord::Base
         #attrs: title, content

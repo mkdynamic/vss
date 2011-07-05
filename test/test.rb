@@ -1,7 +1,7 @@
 require 'test/unit'
 require 'vss'
 
-class SearchTest < Test::Unit::TestCase
+class VSSTest < Test::Unit::TestCase
   def setup
     @doc1 = "I'm not even going to mention any TV series."
     @doc2 = "The Wire is the best thing ever. Fact."
@@ -27,9 +27,22 @@ class SearchTest < Test::Unit::TestCase
   
   def test_ranking
     results = @engine.search("How can you compare The Wire with Lost?")
-    assert_equal 82.17814036133181, results[0].rank
-    assert_equal 3.0816677568068283, results[1].rank
-    assert_equal 1.3798683116522041, results[2].rank
-    assert_equal 0.8753091481365445, results[3].rank
+    assert_similar_float 82.1781, results[0].rank
+    assert_similar_float 3.08166, results[1].rank
+    assert_similar_float 1.37986, results[2].rank
+    assert_similar_float 0.87530, results[3].rank
+  end
+  
+  def test_no_match
+    results = @engine.search("Zebra funnels cash")
+    assert_equal 0, results.size
+  end
+  
+private
+
+  def assert_similar_float(expected, actual, msg = nil)
+    assert Float === expected, "not a Float"
+    sig_figs = [10, actual.to_s.size, expected.to_s.size].min - 1
+    assert_equal expected.to_s[0, sig_figs], actual.to_s[0, sig_figs], msg
   end
 end
