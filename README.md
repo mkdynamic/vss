@@ -24,7 +24,7 @@ To perform a search on a collection of documents:
 require "vss"
 docs = ["hello", "goodbye", "hello and goodbye", "hello, hello!"]
 engine = VSS::Engine.new(docs)
-engine.search("hello") #=> ["hello", "hello, hello!", "hello and goodbye", "goodbye"]
+engine.search("hello") #=> ["hello", "hello, hello!", "hello and goodbye"]
 ```
     
 ## Rails/ActiveRecord
