@@ -1,4 +1,4 @@
-# VSS - Vector Space Search 
+# VSS – Vector Space Search 
 
 A simple vector space search engine with **tf*idf** ranking. 
 
