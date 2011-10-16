@@ -1,19 +1,21 @@
-# VSS – Vector Space Search 
+# VSS – Vector Space Search  &nbsp;[![Build Status](http://travis-ci.org/mkdynamic/vss.png?branch=master)](http://travis-ci.org/mkdynamic/vss)
 
 A simple vector space search engine with tf*idf ranking. 
 
 [More info, and details of how it works.](http://madeofcode.com/posts/69-vss-a-vector-space-search-engine-in-ruby)
 
-## Requirements
-
-Ruby >= 1.8.7. Tested in (MRI 1.8.7 + 1.9.2).
-
-## Install
+## Installation
 
 Just install the gem:
 
 ```bash
 gem install vss
+```
+
+Or add to your Gemfile, if you're using Bundler:
+
+```ruby
+gem 'vss'
 ```
 
 ## Usage
@@ -44,6 +46,15 @@ engine = VSS::Engine.new(docs, documentizer)
 ## Notes
 
 This isn't designed to be used on huge collections of records. The original use case was for ranking a smallish set of `ActiveRecord` results obtained via a query (using **SearchLogic**). So, essentially, the search consisted of 2 stages; getting the *corpus* via a SQL query, then doing the VSS on that.
+
+## Ruby
+
+Tested with the following Ruby versions:
+
+- MRI 1.9.2
+- MRI 1.8.7
+
+Probably works on JRuby ~> 1.6 too, but not actively tested.
 
 ## Credits
 
