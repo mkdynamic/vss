@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 1.8.7"
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
-  s.add_runtime_dependency "stemmer"
+  s.add_runtime_dependency "stemmer", "~> 1.0.0"
   
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")
