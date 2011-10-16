@@ -4,7 +4,6 @@ require File.expand_path('../lib/vss/version', __FILE__)
 Gem::Specification.new do |s|
   s.name        = "vss"
   s.version     = VSS::VERSION
-  s.platform    = Gem::Platform::RUBY
   s.authors     = ["Mark Dodwell"]
   s.email       = ["labs@mkdynamic.co.uk"]
   s.homepage    = "https://github.com/mkdynamic/vss"
