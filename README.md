@@ -61,3 +61,7 @@ Probably works on JRuby ~> 1.6 too, but not actively tested.
 Heavily inspired by [Joesph Wilk's article on building a vector space search engine in Python](http://blog.josephwilk.net/projects/building-a-vector-space-search-engine-in-python.html).
 
 Written by Mark Dodwell ([@madeofcode](http://twitter.com/madeofcode))
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mkdynamic/vss/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
